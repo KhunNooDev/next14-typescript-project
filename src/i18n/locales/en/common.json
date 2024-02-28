@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "Name",
+    "title-sign-in": "Sign in",
+    "title-sign-up": "Sign up",
+    "title-home": "Home",
+    "title-about": "About",
+    "title-usage": "Usage"
+  },
+  "menus": {
+    "home": "Home",
+    "about": "About",
+    "usage": "Usage"
+  },
+  "btn": {
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "submit": "Submit",
+    "reset": "Reset"
+  },
+  "divider": {
+    "or": "or sign in with"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalid_type": "Invalid type",
+    "too_small": "This must be greater than or equal to {{err.minimum}}",
+    "too_big": "This must be less than or equal to {{err.maximum}}",
+    "email_format": "Invalid email format",
+    "invalid_literal": "Invalid literal",
+    "custom": "Custom validation failed",
+    "invalid_union": "Invalid union",
+    "invalid_union_discriminator": "Invalid union discriminator",
+    "invalid_enum_value": "Invalid enum value",
+    "unrecognized_keys": "Unrecognized keys",
+    "invalid_arguments": "Invalid arguments",
+    "invalid_return_type": "Invalid return type",
+    "invalid_date": "Invalid date",
+    "invalid_string": "Invalid string",
+    "invalid_intersection_types": "Invalid intersection types",
+    "not_multiple_of": "Value must be multiple of {{err.divisor}}",
+    "not_finite": "Value must be finite"
+  }
+}

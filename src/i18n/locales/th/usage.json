@@ -1,0 +1,14 @@
+{
+  "number": "จำนวน: {{val, number}}",
+  "currency": "สกุลเงิน: {{val, currency}}",
+  "dateTime": "วัน/เวลา: {{val, datetime}}",
+  "relativeTime": "เวลาที่เป็นสัมพันธ์: {{val, relativetime}}",
+  "list": "รายการ: {{val, list}}",
+  "weekdays": [
+    "จันทร์",
+    "อังคาร",
+    "พุธ",
+    "พฤหัสบดี",
+    "ศุกร์"
+  ]
+}

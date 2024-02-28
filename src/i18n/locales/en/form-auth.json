@@ -1,0 +1,19 @@
+{
+  "email": "Email",
+  "username": "Username",
+  "password": "Password",
+  "btn": {
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "google": "Sign in with Google",
+    "github": "Sign in with GitHub"
+  },
+  "text": {
+    "already-have-account": "Already have an account?",
+    "new-account": "New user?"
+  },
+  "link": {
+    "sign-in": "Sign in",
+    "sign-up": "Sign up now"
+  }
+}

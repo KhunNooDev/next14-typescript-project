@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "ชื่อ",
+    "title-sign-in": "เข้าสู่ระบบ",
+    "title-sign-up": "ลงชื่อเข้าใช้",
+    "title-home": "หน้าหลัก",
+    "title-about": "เกี่ยวกับ",
+    "title-usage": "การใช้งาน"
+  },
+  "menus": {
+    "home": "หน้าหลัก",
+    "about": "เกี่ยวกับ",
+    "usage": "การใช้งาน"
+  },
+  "btn": {
+    "sign-in": "เข้าสู่ระบบ",
+    "sign-up": "ลงชื่อเข้าใช้",
+    "submit": "ส่ง",
+    "reset": "ล้างค่า"
+  },
+  "divider": {
+    "or": "หรือเข้าสู่ระบบด้วย"
+  },
+  "errors": {
+    "required": "จำเป็นต้องกรอกข้อมูล",
+    "invalid_type": "ประเภทไม่ถูกต้อง",
+    "too_small": "ต้องมีค่ามากกว่าหรือเท่ากับ {{err.minimum}}",
+    "too_big": "ต้องมีค่าน้อยกว่าหรือเท่ากับ {{err.maximum}}",
+    "email_format": "รูปแบบอีเมลไม่ถูกต้อง",
+    "invalid_literal": "ข้อมูลตัวอักษรไม่ถูกต้อง",
+    "custom": "การตรวจสอบแบบกำหนดเองล้มเหลว",
+    "invalid_union": "ข้อมูลไม่ตรงกับสมาชิกในกลุ่ม",
+    "invalid_union_discriminator": "Discriminator ของกลุ่มไม่ถูกต้อง",
+    "invalid_enum_value": "ค่าไม่ถูกต้องตาม Enum",
+    "unrecognized_keys": "Key ที่ไม่รู้จัก",
+    "invalid_arguments": "อาร์กิวเมนต์ไม่ถูกต้อง",
+    "invalid_return_type": "ประเภทการคืนค่าไม่ถูกต้อง",
+    "invalid_date": "รูปแบบวันที่ไม่ถูกต้อง",
+    "invalid_string": "ข้อมูลต้องเป็นข้อความ",
+    "invalid_intersection_types": "ประเภทที่ผ่านตัวกรองไม่ถูกต้อง",
+    "not_multiple_of": "ค่าต้องเป็นหลายครั้งของ {{err.divisor}}",
+    "not_finite": "ค่าต้องเป็นจำนวนจริง"
+  }
+}
