@@ -1,10 +1,12 @@
 'use client'
 import { usePathname, useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import ChangeLocale from '../ChangeLocale'
+import ChangeLocale from '@/components/UI/ChangeLocale'
 import { createTranslation } from '@/i18n/client'
 import type { LocaleTypes } from '@/i18n/settings'
-import Button from '../Buttons/Button'
+import Button from '@/components/Buttons/Button'
+import ChangeTheme from '../UI/ChangeTheme'
+import { twMerge } from 'tailwind-merge'
 
 export default function Header() {
   const router = useRouter()
@@ -28,11 +30,11 @@ export default function Header() {
 
   return (
     !isAuthPaths && (
-      <header className='fixed left-0 right-0 top-0 z-50 bg-blue-800 py-4 text-white dark:bg-gray-800 dark:text-gray-200'>
+      <header className='fixed left-0 right-0 top-0 z-50 bg-zinc-100 py-4 text-zinc-900  dark:bg-zinc-900 dark:text-zinc-100'>
         <div className='container mx-auto flex items-center justify-around'>
           <div>
             <Link href={`/${locale}`}>
-              <div className='cursor-pointer text-xl font-bold'>{t('site.title')}</div>
+              <div className='cursor-pointer text-xl font-bold text-blue-500'>{t('site.title')}</div>
             </Link>
           </div>
           <div>
@@ -40,7 +42,11 @@ export default function Header() {
               {menuItems.map(item => (
                 <Link key={item.path} href={`/${locale}${item.path === '/' ? '' : item.path}`}>
                   <div
-                    className={`text-base hover:text-blue-400 dark:hover:text-blue-200 ${pathName === `/${locale}${item.path}` ? 'text-yellow-400 dark:text-blue-200' : ''} cursor-pointer`}
+                    // className={`text-zinc-900 hover:text-yellow-500 dark:text-zinc-100 ${pathName === `/${locale}${item.path}` ? 'text-yellow-500 dark:text-blue-400' : ''} cursor-pointer`}
+                    className={twMerge(
+                      'cursor-pointer text-zinc-900 hover:text-blue-600 dark:text-zinc-100',
+                      pathName === `/${locale}${item.path}` && 'text-blue-700 dark:text-blue-700',
+                    )}
                   >
                     {t(item.label)}
                   </div>
@@ -50,6 +56,7 @@ export default function Header() {
           </div>
 
           <div className='flex items-center gap-2'>
+            <ChangeTheme />
             <ChangeLocale />
             {btnAuthItems.map(item => (
               <Button key={item.path} className='font-bold' onClick={() => router.push(`/${locale}${item.path}`)}>

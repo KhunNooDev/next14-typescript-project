@@ -3,7 +3,7 @@ import { useRouter, useParams, useSelectedLayoutSegments } from 'next/navigation
 import { useState } from 'react'
 import ReactCountryFlag from 'react-country-flag'
 import { LocaleTypes } from '@/i18n/settings'
-import ButtonDropdown from './Buttons/ButtonDropdown'
+import ButtonDropdown from '@/components/Buttons/ButtonDropdown'
 
 export default function ChangeLocale() {
   const router = useRouter()
