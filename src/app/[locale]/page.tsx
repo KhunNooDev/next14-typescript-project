@@ -8,9 +8,23 @@ export default async function IndexPage({ params: { locale } }: ParamsLng) {
   const { t } = await createTranslation(locale, 'home')
 
   return (
-    <div>
-      <h1>{t('greeting')}</h1>
-    </div>
+    <>
+      <section className='flex items-center justify-center border p-2' style={{ minHeight: `calc(100vh - 4rem)` }}>
+        <h1>{t('greeting')}</h1>
+      </section>
+      {/* <div className='flex h-52 w-36 flex-col rounded-md border'>
+        <div className='flex justify-between'>
+          <div>EN</div>
+          <div>gp</div>
+        </div>
+        <div className='flex h-full w-full items-center justify-center bg-gray-200'>
+          <img src='https://via.placeholder.com/200' alt='Your Image' className='max-h-full max-w-full' />
+        </div>
+        <div className='self-center'>
+          word <span className='text-sm text-gray-500'>(pos)</span>
+        </div>
+      </div> */}
+    </>
   )
 }
 

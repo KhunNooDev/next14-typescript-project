@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-color {
+  @apply bg-gray-200 dark:bg-gray-800;
+}
+
+.text-color {
+  @apply text-zinc-900 dark:text-zinc-100;
+}
+
+.bg-btn-color {
+  @apply bg-blue-800 text-zinc-100 hover:bg-blue-900 focus:ring-blue-400;
+  /* dark:bg-blue-200 dark:text-zinc-900 dark:hover:bg-blue-300 dark:focus:ring-blue-100 */
+}
+
+/* color-primary */
+.text-color-p {
+  @apply text-blue-800 dark:text-blue-200;
+  /* color-500: #3b82f6; */
+}
+
+/* color-secondary
+.text-color-s {
+  @apply --;
+} */
+
+/* color-danger */
+.text-color-d {
+  @apply text-pink-600 dark:text-pink-600;
+}
+
+.absolute-center {
+  @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform;
+}
 h1 {
   @apply text-3xl;
 }

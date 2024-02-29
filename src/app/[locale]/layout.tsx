@@ -5,8 +5,8 @@ import '@/styles/tailwind.css'
 
 import { ParamsLng } from '@/i18n/types'
 const ThemePvd = dynamic(() => import('@/providers/ThemeProvider'), { ssr: false })
-import Header from '@/components/Layouts/Header'
-import Main from '@/components/Layouts/Main'
+import LayoutAdmin from '@/components/Layouts/Admin'
+import LayoutUser from '@/components/Layouts/User'
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
@@ -25,13 +25,11 @@ type PropsRootLayout = {
 } & ParamsLng
 
 export default function Layout({ children, params: { locale } }: Readonly<PropsRootLayout>) {
+  const isAdmin = false
   return (
     <html lang={locale}>
       <body className={poppins.className}>
-        <ThemePvd>
-          <Header />
-          <Main>{children}</Main>
-        </ThemePvd>
+        <ThemePvd>{isAdmin ? <LayoutAdmin>{children}</LayoutAdmin> : <LayoutUser>{children}</LayoutUser>}</ThemePvd>
       </body>
     </html>
   )
