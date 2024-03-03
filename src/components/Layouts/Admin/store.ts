@@ -1,11 +1,10 @@
 import { create } from 'zustand'
 
 type Store = {
-  sidebarOpen: boolean
-  setSidebarOpen: (arg: boolean) => void
+  isCollapsed: boolean
+  toggleSidebarcollapse: () => void
 }
-
-export const useSidebarOpen = create<Store>()(set => ({
-  sidebarOpen: false,
-  setSidebarOpen: () => set(state => ({ sidebarOpen: !state.sidebarOpen })),
+export const useSidebarStore = create<Store>()(set => ({
+  isCollapsed: false,
+  toggleSidebarcollapse: () => set(state => ({ isCollapsed: !state.isCollapsed })),
 }))

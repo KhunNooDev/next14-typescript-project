@@ -25,7 +25,7 @@ type PropsRootLayout = {
 } & ParamsLng
 
 export default function Layout({ children, params: { locale } }: Readonly<PropsRootLayout>) {
-  const isAdmin = false
+  const isAdmin = true
   return (
     <html lang={locale}>
       <body className={poppins.className}>
