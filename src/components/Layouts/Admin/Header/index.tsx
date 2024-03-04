@@ -1,7 +1,6 @@
 import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri'
 import { useSidebarStore } from '../store'
-import ChangeTheme from '@/components/UI/ChangeTheme'
-import Avatar from '@/components/UI/Avatar'
+import { Avatar, ChangeTheme } from '@/components/UI'
 
 export default function Header() {
   const { isCollapsed, toggleSidebarcollapse } = useSidebarStore()

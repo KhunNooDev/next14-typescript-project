@@ -1,5 +1,7 @@
+'use client'
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import { Badge } from '.'
 
 interface MenuItem {
   label: string
@@ -69,7 +71,7 @@ export default function Avatar() {
         <div>{infoUser.fullname}</div>
         <div className='text-sm text-gray-500 dark:text-gray-400'>{infoUser.email}</div>
       </div>
-      <div className='relative' style={{ width: 40, height: 40 }}>
+      <Badge style={{ width: 40, height: 40 }}>
         <Image
           width={40}
           height={40}
@@ -78,7 +80,7 @@ export default function Avatar() {
           onClick={handleClick}
           className='cursor-pointer rounded-full'
         />
-        <span className='absolute bottom-0 left-7 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-400 dark:border-gray-800'></span>
+        {/* <span className='absolute bottom-0 left-7 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-400 dark:border-gray-800'></span> */}
 
         {isOpen && (
           <div
@@ -109,7 +111,7 @@ export default function Avatar() {
             </div>
           </div>
         )}
-      </div>
+      </Badge>
     </div>
   )
 }
