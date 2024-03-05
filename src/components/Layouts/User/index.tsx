@@ -44,7 +44,7 @@ export default function LayoutUser({ children }: { children: React.ReactNode }) 
   return (
     <>
       {!isAuthPaths && (
-        <header className='bg-color text-color fixed left-0 right-0 top-0 z-50 flex h-16 items-center justify-center py-4'>
+        <header className='bg-color text-color fixed left-0 right-0 top-0 z-50 flex h-14 items-center justify-center py-4'>
           <div className='container relative mx-auto flex items-center justify-between px-3'>
             <div className='md:hidden'>
               <RiMenuLine className='cursor-pointer text-3xl' onClick={() => setMenuOpen(!isMenuOpen)} />

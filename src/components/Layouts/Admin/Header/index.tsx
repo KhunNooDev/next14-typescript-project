@@ -6,7 +6,7 @@ export default function Header() {
   const { isCollapsed, toggleSidebarcollapse } = useSidebarStore()
 
   return (
-    <header className='bg-color text-color flex h-16 items-center justify-between p-4'>
+    <header className='bg-color text-color flex h-14 items-center justify-between p-4'>
       <button onClick={() => toggleSidebarcollapse()}>
         {isCollapsed ? <RiArrowRightLine /> : <RiArrowLeftLine />}
       </button>

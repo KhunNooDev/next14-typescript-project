@@ -83,7 +83,7 @@ export default function Sidebar() {
           },
         )}
       >
-        <div className='flex h-16 w-full items-center justify-center gap-4 border-b border-gray-300 p-4'>
+        <div className='flex h-14 w-full items-center justify-center gap-4 border-b border-gray-300 p-4'>
           <Image width={40} height={40} className='rounded-full' src={'https://via.placeholder.com/40x40'} alt='logo' />
           <p className={cn('whitespace-nowrap text-lg font-semibold', { hidden: isCollapsed })}>The Brave Coders</p>
         </div>

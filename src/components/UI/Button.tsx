@@ -3,7 +3,9 @@ import { ButtonHTMLAttributes, useState } from 'react'
 import { cn } from '@/utils/cn'
 
 // disableRipple
-type PropsButton = {} & ButtonHTMLAttributes<HTMLButtonElement>
+type PropsButton = {
+  icon?: React.ReactNode
+} & ButtonHTMLAttributes<HTMLButtonElement>
 export default function Button(props: PropsButton) {
   const [isShaking, setIsShaking] = useState(false)
 
@@ -28,8 +30,9 @@ export default function Button(props: PropsButton) {
       {...props}
       id='button'
       className={cn(
-        'relative overflow-hidden rounded-sm bg-gradient-to-r from-blue-400 to-cyan-400 px-5 py-3 text-base font-medium tracking-wider text-gray-50 shadow-md shadow-gray-400/50',
+        'relative flex items-center justify-center gap-2 overflow-hidden rounded-sm px-5 py-3 text-base font-medium tracking-wider text-gray-50 shadow-md shadow-gray-400/50',
         {
+          'bg-gradient-to-r from-blue-400 to-cyan-400': !props.className?.includes('bg-'),
           'cursor-not-allowed opacity-50': props.disabled,
           'animate-shake': isShaking,
         },
@@ -40,7 +43,8 @@ export default function Button(props: PropsButton) {
         if (props.onClick) props.onClick(e)
       }}
     >
-      {props.children}
+      {props.icon && <span>{props.icon}</span>}
+      {props.children && props.children}
     </button>
   )
 }
