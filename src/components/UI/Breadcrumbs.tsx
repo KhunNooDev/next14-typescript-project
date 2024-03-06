@@ -23,6 +23,7 @@ export default function Breadcrumbs() {
 
     pathSegmentsToUse.forEach((segment, index) => {
       pathAccumulator += `/${segment}`
+      segment = segment.replace('-', ' ')
       breadcrumbsData.push({
         name: segment.charAt(0).toUpperCase() + segment.slice(1),
         path: pathAccumulator,

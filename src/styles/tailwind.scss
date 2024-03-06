@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .bg-color {
-  @apply bg-gray-200 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-gray-900;
 }
 
 .text-color {
@@ -48,4 +48,12 @@ h3 {
 
 .form-field {
   @apply mb-1 w-full border p-1;
+}
+
+*:not(.react-icons) {
+  @at-root {
+    &:has(> .react-icons) {
+      @apply flex items-center;
+    }
+  }
 }

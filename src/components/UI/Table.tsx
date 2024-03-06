@@ -1,3 +1,4 @@
+'use client'
 import React, { ReactNode, useState } from 'react'
 import {
   RiArrowLeftSLine,
@@ -110,79 +111,86 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
   const slicedData = sortedData.slice(startIndex, endIndex)
 
   return (
-    <div className='overflow-x-auto'>
-      <table className='w-full table-auto border-collapse'>
-        <thead>
-          <tr className='bg-gray-100'>
-            {React.Children.map(children, (child, index) => {
-              if (React.isValidElement(child)) {
-                const columnProps = child.props as ColumnProps
-                return (
-                  <th
-                    key={index}
-                    className={cn('border border-gray-300 px-4 py-2 ', columnProps.className)}
-                    style={{ flexBasis: columnProps.width, width: columnProps.width }}
-                    onClick={() => columnProps.sortable && handleSortChange(columnProps.field)}
-                  >
-                    <div className='flex items-center justify-between'>
-                      <span>{columnProps.header}</span>
-                      {(columnProps.filterable || columnProps.sortable) && (
-                        <div className='flex items-center justify-between gap-2'>
-                          {columnProps.filterable && (
-                            <input
-                              type='text'
-                              value={filter[columnProps.field] || ''}
-                              onChange={e => handleFilterChange(columnProps.field, e.target.value)}
-                              className='ml-2 rounded-md border border-gray-300 px-2 py-1'
-                              placeholder={`Filter ${columnProps.header}`}
-                            />
-                          )}
-                          {columnProps.sortable && sort && sort.field === columnProps.field && (
-                            <span>{sort.desc ? <RiSortDesc /> : <RiSortAsc />}</span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  </th>
-                )
-              }
-              return null
-            })}
-            <th className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {slicedData.map((row, rowIndex) => (
-            <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-50' : ''}>
-              {React.Children.map(children, (child, colIndex) => {
+    <div className='relative'>
+      <div style={{ minWidth: '500px', overflowX: 'scroll' }}>
+        <table className='w-full table-auto border-collapse'>
+          <thead>
+            <tr className='bg-gray-100'>
+              {React.Children.map(children, (child, index) => {
                 if (React.isValidElement(child)) {
                   const columnProps = child.props as ColumnProps
                   return (
-                    <td
-                      key={colIndex}
-                      className='border border-gray-300 px-4 py-2'
+                    <th
+                      key={index}
+                      className={cn('border border-gray-300 px-4 py-2 ', columnProps.className)}
                       style={{ flexBasis: columnProps.width, width: columnProps.width }}
+                      onClick={() => columnProps.sortable && handleSortChange(columnProps.field)}
                     >
-                      {row[columnProps.field]}
-                    </td>
+                      <div className='flex items-center justify-between'>
+                        <span>{columnProps.header}</span>
+                        {(columnProps.filterable || columnProps.sortable) && (
+                          <div className='flex items-center justify-between gap-2'>
+                            {columnProps.filterable && (
+                              <input
+                                type='text'
+                                value={filter[columnProps.field] || ''}
+                                onChange={e => handleFilterChange(columnProps.field, e.target.value)}
+                                className='ml-2 rounded-md border border-gray-300 px-2 py-1'
+                                placeholder={`Filter ${columnProps.header}`}
+                              />
+                            )}
+                            {columnProps.sortable && sort && sort.field === columnProps.field && (
+                              <span>{sort.desc ? <RiSortDesc /> : <RiSortAsc />}</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </th>
                   )
                 }
                 return null
               })}
-              <td className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
-                <div className='flex items-center justify-center gap-2'>
-                  {onEdit && <Button className='' onClick={() => onEdit(row)} icon={<RiPencilLine />} />}
-                  {onDelete && (
-                    <Button className='bg-red-500' onClick={() => onDelete(row)} icon={<RiDeleteBinLine />} />
-                  )}
-                </div>
-              </td>
+              {(onEdit || onDelete) && (
+                <th className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
+                  Actions
+                </th>
+              )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {slicedData.map((row, rowIndex) => (
+              <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-50' : ''}>
+                {React.Children.map(children, (child, colIndex) => {
+                  if (React.isValidElement(child)) {
+                    const columnProps = child.props as ColumnProps
+                    return (
+                      <td
+                        key={colIndex}
+                        className='border border-gray-300 px-4 py-2'
+                        style={{ flexBasis: columnProps.width, width: columnProps.width }}
+                      >
+                        {row[columnProps.field]}
+                      </td>
+                    )
+                  }
+                  return null
+                })}
+                {(onEdit || onDelete) && (
+                  <td className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
+                    <div className='flex items-center justify-center gap-2'>
+                      {onEdit && <Button className='' onClick={() => onEdit(row)} icon={<RiPencilLine />} />}
+                      {onDelete && (
+                        <Button className='bg-red-500' onClick={() => onDelete(row)} icon={<RiDeleteBinLine />} />
+                      )}
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <div className='mt-4 flex items-center justify-end gap-2'>
         {/* Pagination controls */}
         <div className='flex items-center'>

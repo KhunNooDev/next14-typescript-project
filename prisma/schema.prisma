@@ -20,9 +20,10 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
-  accounts     Account[]
-  createdWords Word[]    @relation("createdByUser")
-  updatedWords Word[]    @relation("updatedByUser")
+  accounts Account[]
+
+  words     Word[]
+  Flashcard Flashcard[]
 }
 
 model Account {
@@ -46,26 +47,37 @@ model Account {
 
 model Word {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  word          String
-  partsOfSpeech String
-  phonetics     String
-  meaning       String
-  example       String
-  image         Bytes?
-  categories    String[]
-  level         String
-  synonyms      String[] @default([])
-  antonyms      String[] @default([])
-  language      String
+  text          String // The actual word or phrase
+  language      String // The language of the word or phrase
+  partsOfSpeech String? // The parts of speech (e.g., noun, verb, adjective)
+  phonetics     String? // The pronunciation or phonetics of the word
+  meaning       String // The meaning or translation of the word
+  example       String? // An example sentence using the word
+  image         Bytes? // An optional image representing the word
+  categories    String[] // Categories or tags associated with the word
+  level         String? // The difficulty level of the word
+  synonyms      String[] @default([]) // Synonyms of the word
+  antonyms      String[] @default([]) // Antonyms of the word
+  createdBy     User?    @relation(fields: [createdById], references: [id])
+  createdById   String?  @db.ObjectId
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  translationIds String[] @default([])
+  flashcards Flashcard[]
+}
 
-  // created
-  createdAt   DateTime @default(now())
-  createdBy   User?    @relation("createdByUser", fields: [createdById], references: [id])
+model Flashcard {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  front       String // The front side of the flashcard (e.g., the word in Japanese)
+  back        String // The back side of the flashcard (e.g., the meaning in English)
+  example     String? // An example sentence using the word
+  image       Bytes? // An optional image representing the flashcard
+  language    String // The language of the flashcard
+  createdBy   User?    @relation(fields: [createdById], references: [id])
   createdById String?  @db.ObjectId
-  // updated
+  createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  updatedBy   User?    @relation("updatedByUser", fields: [updatedById], references: [id])
-  updatedById String?  @db.ObjectId
+
+  word   Word?   @relation(fields: [wordId], references: [id])
+  wordId String? @db.ObjectId
 }

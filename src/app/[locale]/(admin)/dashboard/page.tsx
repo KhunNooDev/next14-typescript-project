@@ -3,6 +3,9 @@ import React from 'react'
 import Breadcrumbs from '@/components/UI/Breadcrumbs'
 import Button from '@/components/UI/Button'
 import Table, { Column } from '@/components/UI/Table'
+import Toolbar from '@/components/UI/Toolbar'
+import { RiArrowRightLine, RiDashboardLine } from 'react-icons/ri'
+import Divider from '@/components/UI/Divider'
 
 type CardProps = {
   title?: string
@@ -26,8 +29,8 @@ export default function DashboardPage() {
   return (
     <div className='p-2' style={{ minHeight: 'calc(100vh - 4rem)' }}>
       <section>
-        <Breadcrumbs />
-        <h1 className='mb-4 text-2xl font-bold'>Dashboard</h1>
+        <Toolbar left={<Breadcrumbs />} right={<Button>Create</Button>} />
+        <Divider />
         {/* <div className='grid grid-cols-12 gap-2'>
           <Card title='User'>Test</Card>
         </div> */}

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { Poppins } from 'next/font/google'
-import '@/styles/tailwind.css'
+import '@/styles/tailwind.scss'
 
 import { ParamsLng } from '@/i18n/types'
 const ThemePvd = dynamic(() => import('@/providers/ThemeProvider'), { ssr: false })
