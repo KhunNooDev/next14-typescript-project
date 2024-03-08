@@ -3,6 +3,10 @@ module.exports = {
   content: ['./**/*.{jsx,tsx,mdx}'],
   theme: {
     extend: {
+      screens: {
+        'sm': '512px', //default '640px'
+        '2xl': '1980px' //default '1536px'
+      },
       keyframes: {
         ripple: {
           '0%': { width: '0px', height: '0px', opacity: 0.5 },
@@ -32,5 +36,19 @@ module.exports = {
     //   variants: ['md'],
     // },
   ],
-  plugins: [require('@tailwindcss/forms')],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [
+    ({ addUtilities }) => {
+      addUtilities({
+        '.grid-responsive': {
+          '@apply grid grid-cols-12': {},
+        },
+        '.cols-responsive': {
+          '@apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 xl:col-span-2 2xl:col-span-1': {},
+        },
+      });
+    },
+    require('@tailwindcss/forms'), require('@tailwindcss/aspect-ratio')],
 };

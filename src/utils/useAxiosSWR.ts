@@ -10,8 +10,8 @@ export interface AxiosSWRResponse<T> {
 }
 
 // Define the useAxiosSWR hook
-export const useAxiosSWR = <T>(endpoint: string, params?: any): AxiosSWRResponse<T> => {
-  const { data, error, isValidating } = useSWR<T>([endpoint, params], apiUtils.getData)
+export const useAxiosSWR = <T>(endpoint: string): AxiosSWRResponse<T> => {
+  const { data, error, isValidating } = useSWR<T>(endpoint, apiUtils.getData)
 
   return {
     data: data as T, // Type assertion here

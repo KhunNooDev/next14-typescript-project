@@ -1,5 +1,5 @@
 'use client'
-import { UserData } from '@/app/api/accounts/route'
+import { UserData } from '@/app/api/accounts/data'
 import { Breadcrumbs, Button, Divider, Toolbar } from '@/components/UI'
 import Table, { Column } from '@/components/UI/Table'
 import { useAxiosSWR } from '@/utils/useAxiosSWR'
@@ -14,11 +14,11 @@ export default function AccountsManagementPage() {
   const pathname = usePathname()
 
   const { data, error, isLoading } = useAxiosSWR<dataType>('accounts')
-  if (isLoading) return
+  if (!data) return
 
   return (
     <div className='p-2' style={{ minHeight: 'calc(100vh - 4rem)' }}>
-      <section className='bg-color rounded-md p-2'>
+      <section className='bg-color overflow-hidden rounded-md p-2'>
         <Breadcrumbs />
         <Toolbar
           left={<h1>Account</h1>}

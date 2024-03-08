@@ -5,7 +5,7 @@ import { Breadcrumbs, Button, Divider, Toolbar } from '@/components/UI'
 export default function AccountsManagementPage() {
   return (
     <div className='flex flex-col gap-2 p-2' style={{ minHeight: 'calc(100vh - 4rem)' }}>
-      <section className='bg-color rounded-md p-2'>
+      <section className='bg-color overflow-hidden rounded-md p-2'>
         <Toolbar left={<Breadcrumbs />} />
         <Divider />
         <h1>Create Account</h1>
