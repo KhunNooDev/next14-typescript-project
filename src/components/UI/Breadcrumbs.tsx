@@ -34,7 +34,7 @@ export default function Breadcrumbs() {
   }, [pathname])
 
   return (
-    <div className='flex items-center'>
+    <div className='mb-2 flex items-center'>
       <Link href='/' className='flex items-center'>
         <RiHome2Line className='mr-1' />
         Home

@@ -111,11 +111,16 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
   const slicedData = sortedData.slice(startIndex, endIndex)
 
   return (
-    <div className='relative'>
-      <div style={{ minWidth: '500px', overflowX: 'scroll' }}>
+    <div className='overflow-hidden'>
+      <div className='overflow-auto'>
         <table className='w-full table-auto border-collapse'>
           <thead>
             <tr className='bg-gray-100'>
+              {(onEdit || onDelete) && (
+                <th className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
+                  Actions
+                </th>
+              )}
               {React.Children.map(children, (child, index) => {
                 if (React.isValidElement(child)) {
                   const columnProps = child.props as ColumnProps
@@ -150,16 +155,21 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
                 }
                 return null
               })}
-              {(onEdit || onDelete) && (
-                <th className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
-                  Actions
-                </th>
-              )}
             </tr>
           </thead>
           <tbody>
             {slicedData.map((row, rowIndex) => (
               <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-50' : ''}>
+                {(onEdit || onDelete) && (
+                  <td className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
+                    <div className='flex items-center justify-center gap-2'>
+                      {onEdit && <Button className='' onClick={() => onEdit(row)} icon={<RiPencilLine />} />}
+                      {onDelete && (
+                        <Button className='bg-red-500' onClick={() => onDelete(row)} icon={<RiDeleteBinLine />} />
+                      )}
+                    </div>
+                  </td>
+                )}
                 {React.Children.map(children, (child, colIndex) => {
                   if (React.isValidElement(child)) {
                     const columnProps = child.props as ColumnProps
@@ -175,16 +185,6 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
                   }
                   return null
                 })}
-                {(onEdit || onDelete) && (
-                  <td className='border border-gray-300 px-4 py-2' style={{ flexBasis: '25px', width: '25px' }}>
-                    <div className='flex items-center justify-center gap-2'>
-                      {onEdit && <Button className='' onClick={() => onEdit(row)} icon={<RiPencilLine />} />}
-                      {onDelete && (
-                        <Button className='bg-red-500' onClick={() => onDelete(row)} icon={<RiDeleteBinLine />} />
-                      )}
-                    </div>
-                  </td>
-                )}
               </tr>
             ))}
           </tbody>

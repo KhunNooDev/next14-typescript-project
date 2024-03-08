@@ -1,18 +1,13 @@
 'use client'
 import { ButtonHTMLAttributes, useState } from 'react'
 import { cn } from '@/utils/cn'
-import { usePathname, useRouter } from 'next/navigation'
 
 // disableRipple
 type PropsButton = {
   icon?: React.ReactNode
-  subPath?: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export default function Button(props: PropsButton) {
-  const router = useRouter()
-  const pathname = usePathname()
-
   const [isShaking, setIsShaking] = useState(false)
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -46,8 +41,6 @@ export default function Button(props: PropsButton) {
       )}
       onClick={e => {
         handleButtonClick(e)
-        if (props.subPath) router.push(`${pathname}${props.subPath}`)
-
         if (props.onClick) props.onClick(e)
       }}
     >

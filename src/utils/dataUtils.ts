@@ -65,3 +65,24 @@ const buildFormData = (formData: FormData, data: any, parentKey?: string) => {
     formData.append(parentKey || '', value)
   }
 }
+
+/**
+ * Replaces placeholders in a string with corresponding values.
+ *
+ * @param text The original string with placeholders.
+ * @param newtexts The values to replace the placeholders with.
+ * @returns The string with placeholders replaced by values.
+ *
+ * @example
+ * // Example 1: Using individual arguments
+ * let newtxt = ReplaceString('{0} and {1} and {2}', 'a', 'b', 'c');
+ *
+ * // Example 2: Using an array of values
+ * let newtxt = ReplaceString('{0} and {1} and {2}', ['a', 'b', 'c']);
+ */
+export const ReplaceString = (text: string, ...newtexts: string[]) => {
+  for (const [idx, newtext] of newtexts.entries()) {
+    text = text.replace(`{${idx}}`, newtext)
+  }
+  return text
+}
