@@ -12,7 +12,7 @@ export type PropsForm = {
   showReset?: boolean
   action?: string
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
-  callback?: (data: any) => void
+  onSubmit?: (data: any) => void
   vertical?: boolean
 }
 

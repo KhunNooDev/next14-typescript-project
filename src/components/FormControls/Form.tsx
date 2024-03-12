@@ -40,7 +40,7 @@ function getLayoutClasses(layout: string, labelCol?: number, inputCol?: number, 
 }
 
 export default function Form(props: PropsForm) {
-  const { children, width = '100%', defaultValues, noSubmit, showReset, action, method, callback, vertical } = props
+  const { children, width = '100%', defaultValues, noSubmit, showReset, action, method, onSubmit, vertical } = props
   if ((action && !method) || (!action && method))
     throw new Error('Both action and method props must be provided or neither.')
 
@@ -50,14 +50,16 @@ export default function Form(props: PropsForm) {
     defaultValues: defaultValues,
   })
   const { handleSubmit, reset } = methods
-  const onSubmit = (data: FormData) => {
+  const onSubmitFrom = (data: FormData) => {
+    if (!action && !method && onSubmit) onSubmit(data)
+
     axios({
       method,
       url: '/api' + action,
       data,
     })
       .then(response => {
-        if (callback) callback(response.data)
+        if (onSubmit) onSubmit(response.data)
         console.log(response.data, data)
       })
       .catch(error => {
@@ -68,7 +70,12 @@ export default function Form(props: PropsForm) {
   return (
     <FormContext.Provider value={{ defaultLayout: vertical ? 'vertical' : 'horizontal' }}>
       <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4 p-2' style={{ width: width }} noValidate>
+        <form
+          onSubmit={handleSubmit(onSubmitFrom)}
+          className='flex flex-col gap-4 p-2'
+          style={{ width: width }}
+          noValidate
+        >
           {children}
           {(!noSubmit || showReset) && (
             <div className='flex flex-col gap-2'>

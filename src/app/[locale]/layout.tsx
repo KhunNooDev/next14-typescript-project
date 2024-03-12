@@ -4,9 +4,10 @@ import { Poppins } from 'next/font/google'
 import '@/styles/tailwind.scss'
 
 import { ParamsLng } from '@/i18n/types'
-const ThemePvd = dynamic(() => import('@/providers/ThemeProvider'), { ssr: false })
+const Provider = dynamic(() => import('@/app/[locale]/provider'), { ssr: false })
 import LayoutAdmin from '@/components/Layouts/Admin'
 import LayoutUser from '@/components/Layouts/User'
+import { ChildrenByRole } from '@/app/[locale]/provider'
 
 const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
@@ -29,7 +30,9 @@ export default function Layout({ children, params: { locale } }: Readonly<PropsR
   return (
     <html lang={locale}>
       <body className={poppins.className}>
-        <ThemePvd>{isAdmin ? <LayoutAdmin>{children}</LayoutAdmin> : <LayoutUser>{children}</LayoutUser>}</ThemePvd>
+        <Provider>
+          <ChildrenByRole>{children}</ChildrenByRole>
+        </Provider>
       </body>
     </html>
   )
