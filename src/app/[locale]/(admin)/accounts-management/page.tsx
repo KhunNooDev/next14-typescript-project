@@ -13,7 +13,7 @@ export default function AccountsManagementPage() {
   const router = useRouter()
   const pathname = usePathname()
 
-  const { data, error, isLoading } = useAxiosSWR<dataType>('accounts')
+  const { data, error, isLoading } = useAxiosSWR<dataType>('accounts', { page: 1, pageSize: 10 })
   if (!data) return
 
   return (

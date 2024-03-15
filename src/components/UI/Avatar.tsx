@@ -2,16 +2,11 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { Badge } from '.'
+import { UserRole } from '@/types/next-auth'
 
 interface MenuItem {
   label: string
   href: string
-}
-
-const infoUser = {
-  fullname: 'Jese Leos',
-  email: 'name@email.com',
-  imageSrc: 'https://via.placeholder.com/40x40',
 }
 
 const menuItems: MenuItem[] = [
@@ -20,7 +15,20 @@ const menuItems: MenuItem[] = [
   { label: 'Earnings', href: '#' },
 ]
 
-export default function Avatar() {
+type AvatarProps = {
+  info?: {
+    name?: string | null
+    email?: string | null
+    image?: string | null
+    role: UserRole
+  }
+}
+export default function Avatar(props: AvatarProps) {
+  const infoUser = props.info || {
+    name: 'Jese Leos',
+    email: 'name@email.com',
+    role: 'user',
+  }
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number }>({ top: 0, left: 0 })
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -68,14 +76,14 @@ export default function Avatar() {
   return (
     <div className='relative right-0 flex items-center gap-4'>
       <div className='font-medium dark:text-white'>
-        <div>{infoUser.fullname}</div>
+        <div>{infoUser.name}</div>
         <div className='text-sm text-gray-500 dark:text-gray-400'>{infoUser.email}</div>
       </div>
       <Badge style={{ width: 40, height: 40 }}>
         <Image
           width={40}
           height={40}
-          src={infoUser.imageSrc}
+          src={infoUser.image || 'https://via.placeholder.com/40x40'}
           alt='user profile'
           onClick={handleClick}
           className='cursor-pointer rounded-full'

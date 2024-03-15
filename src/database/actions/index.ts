@@ -1,20 +1,20 @@
-import { PrismaClient } from "@prisma/client";
-import prisma from "@/database/prismadb";
+import { PrismaClient } from '@prisma/client'
+import prisma from '@/database/prismadb'
 
 /**
  * Retrieve all records for a given Prisma model.
  * @param model - The name of the Prisma model.
  * @returns A promise that resolves to an array of all records.
  */
-export async function selectAll<T extends keyof PrismaClient>(model: T): Promise<any[]> {
+export async function selectAll<T extends keyof PrismaClient>(model: T, args?: {}): Promise<any[]> {
   try {
     // Use PrismaClient to find many records for the specified model
-    const results = await (prisma[model] as any).findMany();
-    return results;
+    const results = await (prisma[model] as any).findMany(args)
+    return results
   } catch (error) {
     // Log and rethrow errors that occur during the operation
-    console.error(`Error selecting all records for ${String(model)}:`, error);
-    throw error;
+    console.error(`Error selecting all records for ${String(model)}:`, error)
+    throw error
   }
 }
 
@@ -31,13 +31,13 @@ export async function selectById<T extends keyof PrismaClient>(model: T, { id }:
       where: {
         id: id,
       },
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
     // Log and rethrow errors that occur during the operation
-    console.error(`Error selecting record for ${String(model)} with ID ${id}:`, error);
-    throw error;
+    console.error(`Error selecting record for ${String(model)} with ID ${id}:`, error)
+    throw error
   }
 }
 
@@ -54,13 +54,13 @@ export async function create<T extends keyof PrismaClient>(model: T, data: any):
       data: {
         ...data,
       },
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
     // Log and rethrow errors that occur during the operation
-    console.error(`Error creating record for ${String(model)}:`, error);
-    throw error;
+    console.error(`Error creating record for ${String(model)}:`, error)
+    throw error
   }
 }
 
@@ -71,18 +71,21 @@ export async function create<T extends keyof PrismaClient>(model: T, data: any):
  * @param data - The partial data to update in the record.
  * @returns A promise that resolves to the updated record.
  */
-export async function updateById<T extends keyof PrismaClient>(model: T, { id, data }: { id: string; data: Partial<PrismaClient[T]>}): Promise<any | null> {
+export async function updateById<T extends keyof PrismaClient>(
+  model: T,
+  { id, data }: { id: string; data: Partial<PrismaClient[T]> },
+): Promise<any | null> {
   try {
     // Use PrismaClient to update a record for the specified model and ID with the provided data
     const result = await (prisma[model] as any).update({
       where: { id: id },
       data: { ...data },
-    });
-    return result;
+    })
+    return result
   } catch (error) {
     // Log and rethrow errors that occur during the operation
-    console.error(`Error updating record for ${String(model)} with ID ${id}:`, error);
-    throw error;
+    console.error(`Error updating record for ${String(model)} with ID ${id}:`, error)
+    throw error
   }
 }
 
@@ -97,12 +100,12 @@ export async function deleteById<T extends keyof PrismaClient>(model: T, { id }:
     // Use PrismaClient to delete a record for the specified model and ID
     const result = await (prisma[model] as any).delete({
       where: { id: id },
-    });
-    return result;
+    })
+    return result
   } catch (error) {
     // Log and rethrow errors that occur during the operation
-    console.error(`Error deleting record for ${String(model)} with ID ${id}:`, error);
-    throw error;
+    console.error(`Error deleting record for ${String(model)} with ID ${id}:`, error)
+    throw error
   }
 }
 
@@ -112,5 +115,5 @@ export async function deleteById<T extends keyof PrismaClient>(model: T, { id }:
  */
 export const closePrismaClient = async () => {
   // Disconnect the Prisma client to release the connection resources
-  await prisma.$disconnect();
-};
+  await prisma.$disconnect()
+}
