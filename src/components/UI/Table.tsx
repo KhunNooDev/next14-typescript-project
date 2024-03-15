@@ -42,7 +42,7 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
   })
 
   const [filter, setFilter] = useState<Record<string, string>>({})
-  const [sort, setSort] = useState<{ field: string; desc: boolean } | null>(null)
+  const [sort, setSort] = useState<Record<string, { field: string; desc: boolean }>>({})
   const [selectedPageSize, setSelectedPageSize] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = Math.ceil((totalRecords || data.length) / selectedPageSize)
@@ -60,11 +60,21 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
 
   const handleSortChange = (field: string) => {
     setSort(prevSort => {
-      if (prevSort && prevSort.field === field) {
-        return { field, desc: !prevSort.desc }
+      const prevSortState = prevSort[field]
+      let desc = false
+      if (prevSortState && prevSortState.field === field) {
+        desc = !prevSortState.desc
       }
-      return { field, desc: false }
+      return { ...prevSort, [field]: { field, desc } }
     })
+  }
+
+  const getSortIcon = (field: string) => {
+    const sortState = sort[field]
+    if (sortState || sortState !== undefined) {
+      return sortState.desc ? <RiSortDesc /> : <RiSortAsc />
+    }
+    return null
   }
 
   const filteredData = data.filter(row => {
@@ -76,17 +86,22 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
     return true
   })
 
-  const sortedData = sort
-    ? filteredData.sort((a, b) => {
-        const aValue = typeof a[sort.field] === 'number' ? a[sort.field] : String(a[sort.field]).toLowerCase()
-        const bValue = typeof b[sort.field] === 'number' ? b[sort.field] : String(b[sort.field]).toLowerCase()
-        if (sort.desc) {
-          return bValue < aValue ? -1 : bValue > aValue ? 1 : 0
-        } else {
-          return aValue < bValue ? -1 : aValue > bValue ? 1 : 0
+  const sortedData = filteredData.slice().sort((a, b) => {
+    // Sorting logic based on the sort state of each column
+    for (const field in sort) {
+      const sortState = sort[field]
+      if (sortState) {
+        const aValue =
+          typeof a[sortState.field] === 'number' ? a[sortState.field] : String(a[sortState.field]).toLowerCase()
+        const bValue =
+          typeof b[sortState.field] === 'number' ? b[sortState.field] : String(b[sortState.field]).toLowerCase()
+        if (aValue !== bValue) {
+          return sortState.desc ? (bValue < aValue ? -1 : 1) : aValue < bValue ? -1 : 1
         }
-      })
-    : filteredData
+      }
+    }
+    return 0
+  })
 
   // Pagination handlers
   const goToPage = (page: number) => {
@@ -129,26 +144,9 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
                       key={index}
                       className={cn('border border-gray-300 px-4 py-2 ', columnProps.className)}
                       style={{ flexBasis: columnProps.width, width: columnProps.width }}
-                      onClick={() => columnProps.sortable && handleSortChange(columnProps.field)}
                     >
                       <div className='flex items-center justify-between'>
                         <span>{columnProps.header}</span>
-                        {(columnProps.filterable || columnProps.sortable) && (
-                          <div className='flex items-center justify-between gap-2'>
-                            {columnProps.filterable && (
-                              <input
-                                type='text'
-                                value={filter[columnProps.field] || ''}
-                                onChange={e => handleFilterChange(columnProps.field, e.target.value)}
-                                className='ml-2 rounded-md border border-gray-300 px-2 py-1'
-                                placeholder={`Filter ${columnProps.header}`}
-                              />
-                            )}
-                            {columnProps.sortable && sort && sort.field === columnProps.field && (
-                              <span>{sort.desc ? <RiSortDesc /> : <RiSortAsc />}</span>
-                            )}
-                          </div>
-                        )}
                       </div>
                     </th>
                   )
@@ -158,6 +156,42 @@ export default function Table({ children, data, totalRecords, onEdit, onDelete }
             </tr>
           </thead>
           <tbody>
+            <tr>
+              {(onEdit || onDelete) && <td className='border border-gray-300 px-4 py-2'></td>}
+              {React.Children.map(children, (child, colIndex) => {
+                if (React.isValidElement(child)) {
+                  const columnProps = child.props as ColumnProps
+                  return (
+                    <td
+                      key={colIndex}
+                      className='border border-gray-300 px-4 py-2'
+                      style={{ flexBasis: columnProps.width, width: columnProps.width }}
+                    >
+                      {(columnProps.filterable || columnProps.sortable) && (
+                        <div className='flex items-center justify-between gap-2'>
+                          {columnProps.filterable && (
+                            <input
+                              type='text'
+                              value={filter[columnProps.field] || ''}
+                              onChange={e => handleFilterChange(columnProps.field, e.target.value)}
+                              className='ml-2 rounded-md border border-gray-300 px-2 py-1'
+                              placeholder={`Filter ${columnProps.header}`}
+                            />
+                          )}
+                          {/* && sort.field === columnProps.field  */}
+                          {columnProps.sortable && (
+                            <span onClick={() => handleSortChange(columnProps.field)}>
+                              {getSortIcon(columnProps.field)}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </td>
+                  )
+                }
+                return null
+              })}
+            </tr>
             {slicedData.map((row, rowIndex) => (
               <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-50' : ''}>
                 {(onEdit || onDelete) && (
