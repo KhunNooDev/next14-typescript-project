@@ -1,10 +1,12 @@
 'use client'
-import { RiGoogleFill, RiGithubFill } from 'react-icons/ri'
-import Form, { DividerWithText, InputPass, InputText } from '@/components/FormControls/Form'
-import { createTranslation } from '@/i18n/client'
-import { useParams, useRouter } from 'next/navigation'
-import { LocaleTypes } from '@/i18n/settings'
 import Link from 'next/link'
+import { useParams, useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+import { RiGoogleFill, RiGithubFill } from 'react-icons/ri'
+
+import { LocaleTypes } from '@/i18n/settings'
+import { createTranslation } from '@/i18n/client'
+import Form, { DividerWithText, InputEmail, InputPass, InputText } from '@/components/FormControls/Form'
 import Button from '@/components/Buttons/Button'
 
 export default function FormSignIn() {
@@ -17,13 +19,23 @@ export default function FormSignIn() {
     console.log(`Signing in with ${provider}`)
   }
 
-  const callbackForm = (data: any) => {
-    // if(success)
-    router.push(`/${locale}/`)
+  const onSubmit = (data: any) => {
+    signIn('credentials', {
+      ...data,
+      redirect: false,
+    }).then(callback => {
+      debugger
+      if (callback?.ok) {
+        // router.refresh()
+        router.push(`/${locale}/`)
+      }
+      if (callback?.error) {
+      }
+    })
   }
   return (
-    <Form action='/submit-form' method='GET' callback={callbackForm} width='300px' noSubmit vertical>
-      <InputText id='username' label={t('username')} labelCol={3} required />
+    <Form onSubmit={onSubmit} width='300px' noSubmit vertical>
+      <InputEmail id='email' label={t('email')} labelCol={3} required />
       <InputPass id='password' label={t('password')} labelCol={3} required />
       <br />
       <Button type='submit' className='text-sm font-medium'>

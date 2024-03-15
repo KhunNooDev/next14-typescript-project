@@ -1,8 +1,10 @@
+import { useSession } from 'next-auth/react'
 import { RiArrowLeftLine, RiArrowRightLine } from 'react-icons/ri'
 import { useSidebarStore } from '../store'
 import { Avatar, ChangeTheme } from '@/components/UI'
 
 export default function Header() {
+  const { data: session } = useSession()
   const { isCollapsed, toggleSidebarcollapse } = useSidebarStore()
 
   return (
@@ -15,7 +17,7 @@ export default function Header() {
         <div className='flex items-center gap-2'>
           <ChangeTheme />
         </div>
-        <Avatar />
+        <Avatar info={session?.user} />
       </div>
     </header>
   )
