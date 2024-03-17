@@ -1,12 +1,12 @@
 'use client'
-import { UserData } from '@/app/api/accounts/data'
 import { Breadcrumbs, Button, Divider, Toolbar } from '@/components/UI'
 import Table, { Column } from '@/components/UI/Table'
 import { useAxiosSWR } from '@/utils/useAxiosSWR'
+import { User } from '@prisma/client'
 import { usePathname, useRouter } from 'next/navigation'
 
 export type dataType = {
-  accounts: UserData[]
+  accounts: User[]
   totalRecords: number
 }
 export default function AccountsManagementPage() {

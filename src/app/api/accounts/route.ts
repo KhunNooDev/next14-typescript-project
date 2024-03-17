@@ -1,8 +1,6 @@
 import { NextRequest } from 'next/server'
 import { DataApiType, ErrorType, errorResponse, jsonResponse } from '@/database/utils/apiResponse'
-import { accounts } from './data'
 import prisma from '@/database/prismadb'
-import { selectAll } from '@/database/actions'
 import { apiUtils } from '@/utils/apiUtils'
 
 // For getting data (filter)

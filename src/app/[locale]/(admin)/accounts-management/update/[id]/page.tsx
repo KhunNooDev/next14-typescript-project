@@ -6,6 +6,7 @@ import { dataType } from '../../page'
 
 export default function AccountsManagementPage({ params }: { params: { id: string } }) {
   const { data, error, isLoading } = useAxiosSWR<dataType>(`accounts/${params?.id}`)
+
   if (!data) return
 
   return (
@@ -14,11 +15,11 @@ export default function AccountsManagementPage({ params }: { params: { id: strin
         <Toolbar left={<Breadcrumbs />} />
         <Divider />
         <h1>Update Account</h1>
-        <Form action='/submit-form' method='GET' defaultValues={data.accounts} noSubmit>
+        <Form action={`/accounts/${params?.id}`} method='POST' defaultValues={data.accounts} noSubmit>
           <InputEmail id='email' label={'Email'} labelCol={4} required />
           <InputText id='name' label={'Name'} labelCol={4} required />
-          <InputNum id='age' label={'Age'} labelCol={4} required />
-          <InputText id='profession' label={'Profession'} labelCol={4} required />
+          {/* <InputNum id='age' label={'Age'} labelCol={4} required /> */}
+          {/* <InputText id='profession' label={'Profession'} labelCol={4} required /> */}
           {/* <InputPass id='password' label={'Password'} labelCol={4} required /> */}
           <br />
           <Button type='submit' className='text-sm font-medium'>

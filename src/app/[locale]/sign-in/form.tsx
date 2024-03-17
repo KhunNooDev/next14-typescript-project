@@ -24,7 +24,7 @@ export default function FormSignIn() {
       ...data,
       redirect: false,
     }).then(callback => {
-      debugger
+      // debugger
       if (callback?.ok) {
         // router.refresh()
         router.push(`/${locale}/`)

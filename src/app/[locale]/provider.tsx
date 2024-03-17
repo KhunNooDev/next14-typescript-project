@@ -18,11 +18,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
 
 export function ChildrenByRole({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession()
-  if (session) {
-    console.log(session?.user)
+  // if (session) {
+  //   console.log(session?.user)
 
-    debugger
-  }
+  //   debugger
+  // }
   // if (session?.user?.role === 'user') {
   //   return <p>You are an user, welcome!</p>
   // }
